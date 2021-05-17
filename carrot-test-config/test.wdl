@@ -1,9 +1,11 @@
 version 1.0
 
 task make_data_file {
-    Float a
-    Float b
-    String image_to_use
+    input {
+        Float a
+        Float b
+        String image_to_use
+    }
     command {
         example-test make-data ${a} ${b}
     }
@@ -16,7 +18,7 @@ task make_data_file {
 }
 
 workflow test_workflow {
-    input{
+    input {
         Float a
         Float b
         String image_to_use

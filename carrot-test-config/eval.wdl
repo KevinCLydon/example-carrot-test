@@ -1,8 +1,10 @@
 version 1.0
 
 task compare {
-    File data_file
-    String image_to_use
+    input {
+        File data_file
+        String image_to_use
+    }
     command {
         example-test compare ${data_file}
     }
