@@ -6,8 +6,8 @@ carrot_cli result create --name "example comparison file" --description "A file 
 carrot_cli pipeline create --name "Example Pipeline" --description "Pipeline for demonstrating CARROT"
 
 carrot_cli template create --pipeline_id [pipeline_id] --name "Example Template" --description "Template for demonstrating CARROT" \
---test_wdl https://github.com/KevinCLydon/example-carrot-test/blob/main/carrot-test-config/test.wdl \
---eval_wdl https://github.com/KevinCLydon/example-carrot-test/blob/main/carrot-test-config/eval.wdl
+--test_wdl https://raw.githubusercontent.com/KevinCLydon/example-carrot-test/main/carrot-test-config/test.wdl \
+--eval_wdl https://raw.githubusercontent.com/KevinCLydon/example-carrot-test/main/carrot-test-config/eval.wdl
 
 carrot_cli template map_to_result [template_id] [first_result_id] test_workflow.data_file
 carrot_cli template map_to_result [template_id] [second_result_id] eval_workflow.comparison_result
