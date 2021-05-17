@@ -1,0 +1,22 @@
+carrot_cli software create --name example-test --description "An example CARROT test software" --repository_url https://github.com/KevinCLydon/example-carrot-test
+
+carrot_cli result create --name "example data file" --description "A file containing example data to graph" --result_type file
+carrot_cli result create --name "example comparison file" --description "A file containing data from comparing example data file to 2^x" --result_type file
+
+carrot_cli pipeline create --name "Example Pipeline" --description "Pipeline for demonstrating CARROT"
+
+carrot_cli template create --pipeline_id [pipeline_id] --name "Example Template" --description "Template for demonstrating CARROT" \
+--test_wdl https://github.com/KevinCLydon/example-carrot-test/blob/main/carrot-test-config/test.wdl \
+--eval_wdl https://github.com/KevinCLydon/example-carrot-test/blob/main/carrot-test-config/eval.wdl
+
+carrot_cli template map_to_result [template_id] [first_result_id] test_workflow.data_file
+carrot_cli template map_to_result [template_id] [second_result_id] eval_workflow.comparison_result
+
+carrot_cli report create --name "Example Report" --description "Report for demonstrating CARROT" --notebook report.ipynb
+
+carrot_cli template map_to_report [template_id] [report_id]
+
+carrot_cli test create --name "Example Test" --template_id [template_id] --description "Test for demonstrating CARROT" \
+--test_input_defaults test_input_defaults.json --eval_input_defaults eval_input_defaults.json
+
+carrot_cli test run --test_input test_input.json --eval_input eval_input.json

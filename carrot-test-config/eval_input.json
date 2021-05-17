@@ -1,0 +1,3 @@
+{
+    "eval_workflow.image_to_use": "image_build:example-test|test"
+}
