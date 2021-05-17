@@ -19,4 +19,4 @@ carrot_cli template map_to_report [template_id] [report_id]
 carrot_cli test create --name "Example Test" --template_id [template_id] --description "Test for demonstrating CARROT" \
 --test_input_defaults test_input_defaults.json --eval_input_defaults eval_input_defaults.json
 
-carrot_cli test run --test_input test_input.json --eval_input eval_input.json
+carrot_cli test run --test_input test_input.json --eval_input eval_input.json [test_id]
