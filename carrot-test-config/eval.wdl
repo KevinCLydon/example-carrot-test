@@ -17,7 +17,7 @@ task compare {
 }
 
 workflow eval_workflow {
-    input{
+    input {
         File data_file
         String image_to_use
     }

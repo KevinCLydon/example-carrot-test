@@ -1,22 +1,52 @@
-carrot_cli software create --name example-test --description "An example CARROT test software" --repository_url https://github.com/KevinCLydon/example-carrot-test
+# Create a software entry for this repository
+carrot_cli software create --name example-test --description "An example CARROT test software" \
+--repository_url https://github.com/KevinCLydon/example-carrot-test
 
-carrot_cli result create --name "example data file" --description "A file containing example data to graph" --result_type file
-carrot_cli result create --name "example comparison file" --description "A file containing data from comparing example data file to 2^x" --result_type file
+# Create results for the data file and comparison file that will be output by the test and eval wdl
+carrot_cli result create --name "example data file" \
+--description "A file containing example data to graph" --result_type file
+carrot_cli result create --name "example comparison file" \
+--description "A file containing data from comparing example data file to 2^x" --result_type file
 
-carrot_cli pipeline create --name "Example Pipeline" --description "Pipeline for demonstrating CARROT"
+# Create a pipeline that you can use to group any example tests together
+carrot_cli pipeline create --name "Example Pipeline" \
+--description "Pipeline for demonstrating CARROT"
 
-carrot_cli template create --pipeline_id [pipeline_id] --name "Example Template" --description "Template for demonstrating CARROT" \
+# Create a template which defines the WDLs that will be used for any tests based on it
+# Replace [pipeline_id] with the pipeline_id value returned by the `pipeline create` command
+carrot_cli template create --pipeline_id [pipeline_id] --name "Example Template" \
+--description "Template for demonstrating CARROT" \
 --test_wdl https://raw.githubusercontent.com/KevinCLydon/example-carrot-test/main/carrot-test-config/test.wdl \
 --eval_wdl https://raw.githubusercontent.com/KevinCLydon/example-carrot-test/main/carrot-test-config/eval.wdl
 
+# Map the template to the results you created, so the results will be accessible when the run 
+# completes
+# Replace [template_id] with the template_id returned by `template create` and replace the result
+# ids with the result_id values from the `result create` command
 carrot_cli template map_to_result [template_id] [first_result_id] test_workflow.data_file
 carrot_cli template map_to_result [template_id] [second_result_id] eval_workflow.comparison_result
 
-carrot_cli report create --name "Example Report" --description "Report for demonstrating CARROT" --notebook report.ipynb
+# Create a report for viewing your results all pretty when the run is complete
+carrot_cli report create --name "Example Report" --description "Report for demonstrating CARROT" \
+--notebook report.ipynb
 
+# Map the template to the report so it will be generated automatically when the run completes
+# Fill in the template_id from `template create` and the report_id from `report create`
 carrot_cli template map_to_report [template_id] [report_id]
 
-carrot_cli test create --name "Example Test" --template_id [template_id] --description "Test for demonstrating CARROT" \
---test_input_defaults test_input_defaults.json --eval_input_defaults eval_input_defaults.json
+# Create a test that defines default values that will be used for every run
+# Fill in the template_id from `template create`
+carrot_cli test create --name "Example Test" --template_id [template_id] \
+--description "Test for demonstrating CARROT" --test_input_defaults test_input_defaults.json \
+--eval_input_defaults eval_input_defaults.json
 
+# Run the test
+# Use the test_id from `test create`
 carrot_cli test run --test_input test_input.json --eval_input eval_input.json [test_id]
+
+# Get the status of the run you started, along with results if it has completed
+carrot_cli run find_by_id [run_id]
+
+# Get the status of the report for the run you started (once the run has completed), along with
+# the location of the report if it has completed
+carrot_cli run find_report_by_ids [run_id] [report_id]
